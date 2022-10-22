@@ -7,6 +7,14 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './pages/user/Dashboard';
 import PrivateRoute from './components/routes/PrivateRoute';
+import PageNotFound from './pages/PageNotFound';
+import Secret from './pages/user/Secret';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminCategory from './pages/admin/AdminCategory';
+import AdminProduct from './pages/admin/AdminProduct';
+import Orders from './pages/user/Orders';
+import Profile from './pages/user/Profile';
+import AdminRoute from './components/routes/AdminRoute';
 
 function App() {
   return (
@@ -18,8 +26,17 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<PrivateRoute/>}>
-          <Route path="" element={<Dashboard />} />
+          <Route path="user" element={<Dashboard />} />
+          <Route path="user/profile" element={<Profile />} />
+          <Route path="user/orders" element={<Orders />} />
         </Route>
+        <Route path='/dashboard' element={<AdminRoute/>}>
+          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/categories" element={<AdminCategory />} />
+          <Route path="admin/products" element={<AdminProduct />} />
+          <Route path="secret" element={<Secret />} />
+        </Route>
+        <Route path='*' element={<PageNotFound />} replace />
       </Routes>
     </BrowserRouter>
   );

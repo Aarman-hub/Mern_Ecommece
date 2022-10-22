@@ -18,7 +18,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-        const {data} = await axios.post(`${process.env.REACT_APP_API}/user/register`,{name, email, password});
+        const {data} = await axios.post(`/user/register`,{name, email, password});
         if(data?.error){
             toast.error(data.error);
         }else{

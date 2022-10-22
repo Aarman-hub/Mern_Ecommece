@@ -18,6 +18,9 @@ const Nav = () => {
             <li className="nav-item">
                 <NavLink className="nav-link" aria-current="page" to={"/"}>Home</NavLink>
             </li>
+            <li className="nav-item">
+                <NavLink className="nav-link" aria-current="page" to={"/dashboard/secret"}>Secret</NavLink>
+            </li>
             {!auth?.user ? (
                 <>
                     <li className="nav-item">
@@ -28,9 +31,17 @@ const Nav = () => {
                     </li>
                 </>
             ):(
-                <li className='nav-item'>
-                    <a onClick={logout} className='nav-link pointer'>Logout</a>
-                </li>
+                <div className="dropdown">
+                    <button className="btn dropdown-toggle auth-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {auth?.user?.name}
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><NavLink className="dropdown-item active" to={`/dashboard/${auth?.user?.role === 1 ? "admin":"user"}`}>Dashboard</NavLink></li>
+                        <li className='nav-item'>
+                            <a onClick={logout} className='nav-link pointer'>Logout</a>
+                        </li>
+                    </ul>
+                </div>
             )}
             
         </ul>

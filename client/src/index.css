@@ -5,3 +5,7 @@
 .pointer{
   cursor: pointer;
 }
+
+.btn.dropdown-toggle.auth-btn {
+	border: none;
+}

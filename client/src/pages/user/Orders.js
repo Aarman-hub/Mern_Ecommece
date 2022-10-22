@@ -1,10 +1,8 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
 import Jumbotron from '../../components/card/Jumbotron'
 import UserNav from '../../components/nav/UserNav';
 import { useAuth } from '../../context/auth'
 
-const Dashboard = () => {
+const Orders = () => {
   const [auth, setAuth] = useAuth();
   return (
     <>
@@ -15,10 +13,7 @@ const Dashboard = () => {
             <UserNav />
           </div>
           <div className='col-md-9'>
-            <ul className='list-group'>
-              <li className='list-group-item'>{auth?.user?.name}</li>
-              <li className='list-group-item'>{auth?.user?.email}</li>
-            </ul>
+            <h4>Orders</h4>
           </div>
         </div>
       </div>
@@ -26,4 +21,4 @@ const Dashboard = () => {
   );
 }
 
-export default Dashboard
+export default Orders

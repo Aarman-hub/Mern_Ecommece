@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import Jumbotron from '../../components/card/Jumbotron';
 
@@ -9,6 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [auth, setAuth] = useAuth();
    
@@ -16,7 +17,7 @@ const Login = () => {
       e.preventDefault();
   
       try {
-          const {data} = await axios.post(`${process.env.REACT_APP_API}/user/login`,{ email, password});
+          const {data} = await axios.post(`/user/login`,{ email, password});
           
           if(data?.error){
               toast.error(data.error);
@@ -24,7 +25,7 @@ const Login = () => {
               localStorage.setItem("auth", JSON.stringify(data));
               setAuth({...auth, token: data.token, user: data.user});
               toast.success("Login successfully.")
-              navigate('/');
+              navigate( location.state || `/dashboard/${data?.user?.role === 1 ? "admin":"user"}`);
           }
       } catch (error) {
           toast.error(error)
