@@ -6,7 +6,7 @@ import formidable from 'express-formidable';
 const router = express.Router();
 
 
-router.get('/products', getProduct);
+router.get('/products', getProducts);
 router.post("/products", requireSign, isAdmin, formidable(), createProduct);
 router.get("/product/:slug", getProduct);
 router.get("/product/photo/:id", productPhoto)

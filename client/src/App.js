@@ -15,6 +15,8 @@ import AdminProduct from './pages/admin/AdminProduct';
 import Orders from './pages/user/Orders';
 import Profile from './pages/user/Profile';
 import AdminRoute from './components/routes/AdminRoute';
+import AdminProductCreate from './pages/admin/AdminProductCreate';
+import AdminProductUpdate from './pages/admin/AdminProductUpdate';
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/categories" element={<AdminCategory />} />
           <Route path="admin/products" element={<AdminProduct />} />
+          <Route path="admin/products/create" element={<AdminProductCreate />} />
+          <Route path="admin/product/update/:slug" element={<AdminProductUpdate />} />
           <Route path="secret" element={<Secret />} />
         </Route>
         <Route path='*' element={<PageNotFound />} replace />

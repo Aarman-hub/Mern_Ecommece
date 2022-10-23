@@ -4,9 +4,9 @@ import fs from 'fs';
 
 export const getProducts = async (req, res) =>{
     try {
-        const product = await Product.find({}).select("-photo").limit(12).sort({createdAt:-1});
+        const products = await Product.find({}).select("-photo").limit(12).sort({createdAt:-1});
 
-        res.json(product);
+        res.json(products);
     } catch (err) {
         
     }
@@ -34,42 +34,42 @@ export const productPhoto = async (req, res) =>{
 }
 export const createProduct = async (req, res) =>{
     try {
-        const {name, description, price, category, quantity, shipping} = req.fields;
-        const {photo} = req.files;
+        const { name, description, price, category, quantity, shipping } =
+        req.fields;
+        const { photo } = req.files;
 
+        // validation
         switch (true) {
             case !name.trim():
-                res.json({error:"Name is required!"});
+                return res.json({ error: "Name is required" });
             case !description.trim():
-                res.json({error:"Description is required!"});
-            case !price.trim():
-                res.json({error:"Price is required!"});
-            case !quantity.trim():
-                res.json({error:"Quantity is required!"});
-            case !category.trim():
-                res.json({error:"Category is required!"});
+                return res.json({ error: "Description is required" });
+            case !price:
+                return res.json({ error: "Price is required" });
+            case !category:
+                return res.json({ error: "Category is required" });
+            case !quantity:
+                return res.json({ error: "Quantity is required" });
             case !shipping.trim():
-                res.json({error:"Shipping is required!"});
-            case !photo && photo.size > 1000000:
-                res.json({error:"File size must be less than 1mb"});
-
+                return res.json({ error: "Shipping is required" });
+            case photo && photo.size > 1000000:
+                return res.json({ error: "Image should be less than 1mb in size" });
         }
 
-        // res.json({name, description, price, category, quantity, shipping, photo});
+        // create product
+        const product = new Product({ ...req.fields, slug: slugify(name) });
 
-        const product = await new Product({...res.fields, slug:slugify(name)});
-
-        if(photo){
-            product.photo.data = fs.readFileSync(photo.path);
-            product.photo.contentType = photo.type;
+        if (photo) {
+        product.photo.data = fs.readFileSync(photo.path);
+        product.photo.contentType = photo.type;
         }
 
         await product.save();
 
-        res.json(product)
+        res.json(product);
 
     } catch (err) {
-        
+        console.log(err)
     }
 }
 export const updateProduct = async (req, res) =>{
@@ -79,21 +79,22 @@ export const updateProduct = async (req, res) =>{
 
         switch (true) {
             case !name.trim():
-                res.json({error:"Name is required!"});
+                return res.json({ error: "Name is required" });
             case !description.trim():
-                res.json({error:"Description is required!"});
+                return res.json({ error: "Description is required" });
             case !price.trim():
-                res.json({error:"Price is required!"});
-            case !quantity.trim():
-                res.json({error:"Quantity is required!"});
-            case !category.trim():
-                res.json({error:"Category is required!"});
+                return res.json({ error: "Price is required" });
+            case !category:
+                return res.json({ error: "Category is required" });
+            case !quantity:
+                return res.json({ error: "Quantity is required" });
             case !shipping.trim():
-                res.json({error:"Shipping is required!"});
-            case !photo && photo.size > 1000000:
-                res.json({error:"File size must be less than 1mb"});
+                return res.json({ error: "Shipping is required" });
+            // case photo && photo.size > 1000000:
+            //     return res.json({ error: "Image should be less than 1mb in size" });
         }
 
+        // console.log({name, description, price, category, quantity, shipping, photo})
 
         const product = await Product.findByIdAndUpdate(req.params.id, {...req.fields, slug:slugify(name)}, {new:true});
 
@@ -102,7 +103,7 @@ export const updateProduct = async (req, res) =>{
             product.photo.contentType = photo.type;
         }
 
-        await product.save();
+        // await product.save();
 
         res.json(product)
         
