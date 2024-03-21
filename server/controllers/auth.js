@@ -86,6 +86,18 @@ export const login = async (req, res) =>{
     }
 }
 
+export const updateProfile = async (req, res) =>{
+    try {
+        const {name, email, address} = req.body;
+
+        const updated = await User.findById(req.user._id,{name, email, address}, {new:true});
+    
+        res.json(updated);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export const secret = async (req, res)=>{
     res.json({user: req.user});
 }

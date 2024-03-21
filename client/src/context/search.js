@@ -1,0 +1,23 @@
+import {createContext,useContext,useEffect,useState} from 'react';
+
+const SearchContext = createContext();
+
+const SearchProvider = ({children}) => {
+  const [values, setValues] = useState({
+    keyword:'',
+    result:[],
+  });
+
+  
+  useEffect(()=>{
+  },[]);
+
+
+  return <SearchContext.Provider value={[values, setValues]}>
+    {children}
+  </SearchContext.Provider>
+}
+
+const useSearch = () => useContext(SearchContext);
+
+export { useSearch, SearchProvider};

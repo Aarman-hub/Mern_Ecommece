@@ -17,6 +17,12 @@ import Profile from './pages/user/Profile';
 import AdminRoute from './components/routes/AdminRoute';
 import AdminProductCreate from './pages/admin/AdminProductCreate';
 import AdminProductUpdate from './pages/admin/AdminProductUpdate';
+import Shop from './pages/Shop';
+import Search from './pages/Search';
+import ProductView from './pages/ProductView';
+import CategoryLists from './pages/CategoryLists';
+import CategoryView from './pages/CategoryView';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -25,7 +31,13 @@ function App() {
       <Nav />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/shop' element={<Shop />} />
+        <Route path='/product/:slug' element={<ProductView />} />
+        <Route path='/search' element={<Search />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/categories' element={<CategoryLists />} />
+        <Route path='/category/:slug' element={<CategoryView />} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<PrivateRoute/>}>
           <Route path="user" element={<Dashboard />} />
